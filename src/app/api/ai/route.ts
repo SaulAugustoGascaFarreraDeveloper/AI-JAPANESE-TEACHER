@@ -112,8 +112,11 @@ export const GET = async (req:NextRequest) => {
 
     try{
 
-        const speech = req.nextUrl.searchParams.get("speech") || "formal"
-        const speechExample = speech === "formal" ? formalExample : casualExample
+
+        // const speech = req.nextUrl.searchParams.get("speech") || "formal"
+        // const speechExample = speech === "formal" ? formalExample : casualExample
+
+        //const s = req.query.speech;
 
         const chatCompletion = await openai.chat.completions.create({
             messages:[{
@@ -128,9 +131,9 @@ export const GET = async (req:NextRequest) => {
 
                 -spanish: the spanish version ex: "Tu vives en Japon?"
 
-                -japanase: the japanese translation in split into words ex: ${JSON.stringify(speechExample.japanese)}
+                -japanase: the japanese translation in split into words ex: ${JSON.stringify(formalExample.japanese)}
 
-                -grammarBreakdown: an explanation of the grammar structure per sentence ex: ${JSON.stringify(speechExample.grammarBreakdown)}
+                -grammarBreakdown: an explanation of the grammar structure per sentence ex: ${JSON.stringify(formalExample.grammarBreakdown)}
 
                 `
             },   
@@ -162,7 +165,8 @@ export const GET = async (req:NextRequest) => {
               },
               {
                 role: "user",
-                content: `How to say ${req.nextUrl.searchParams.get("question") || "Have you ever been in Japan?"} in Japanese in ${speech} speech?`
+                // content: `How to say ${req.nextUrl.searchParams.get("question") || "Have you ever been in Japan?"} in Japanese in ${speech} speech?`
+                content: `How to say ${"Have you ever been in Japan?"} in Japanese in ${"formal"} speech?`
               }
         
         ],
